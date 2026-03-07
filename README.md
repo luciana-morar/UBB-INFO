@@ -1,2 +1,2 @@
-# UBB-INFO-
+# UBB-INFO
 personal and academic work

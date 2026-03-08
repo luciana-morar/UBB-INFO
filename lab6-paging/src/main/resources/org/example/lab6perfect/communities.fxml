@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.lab6perfect.controller.CommunitiesController"
+      spacing="15">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Statistici Comunități"
+           style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+    <HBox spacing="10">
+        <Button text="Afișează Comunități"
+                onAction="#showCommunities"
+                style="-fx-background-color: #2a4238; -fx-text-fill: white;"/>
+<!--        <Button text="Reîncarcă" onAction="#refresh"/>-->
+    </HBox>
+
+    <TextArea fx:id="communityArea"
+              prefHeight="400"
+              editable="false"
+              wrapText="true"/>
+</VBox>

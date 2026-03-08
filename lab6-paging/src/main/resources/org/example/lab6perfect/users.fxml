@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.lab6perfect.controller.UsersController"
+      spacing="15">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Gestionare Utilizatori"
+           style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+    <HBox spacing="20">
+
+        <VBox spacing="15">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <HBox spacing="10">
+                <Label fx:id="statsLabel" text="Statistici se incarca..."/>
+                <Label fx:id="statusLabel" text="Gata de operare"/>
+            </HBox>
+
+            <HBox spacing="20">
+                <VBox spacing="10" prefWidth="400">
+                    <Label text="Adauga Utilizator Nou" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+                    <GridPane hgap="10" vgap="10">
+                        <Label text="Tip:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <ComboBox fx:id="userTypeCombo" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="180"/>
+
+                        <Label text="Username:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <TextField fx:id="usernameField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                        <Label text="Email:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <TextField fx:id="emailField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                        <Label text="Parola:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                        <TextField fx:id="passwordField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                        <Label fx:id="lblNume" text="Nume:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                        <TextField fx:id="numeField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                        <Label fx:id="lblPrenume" text="Prenume:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                        <TextField fx:id="prenumeField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                        <Label fx:id="lblOcupatie" text="Ocupatie:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                        <TextField fx:id="ocupatieField" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+                        <Label fx:id="lblDataNasterii" text="Data nasterii:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                        <DatePicker fx:id="dataNasteriiPicker" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+
+                        <Label fx:id="lblViteza" text="Viteza:" GridPane.rowIndex="8" GridPane.columnIndex="0" visible="false"/>
+                        <TextField fx:id="vitezaField" GridPane.rowIndex="8" GridPane.columnIndex="1" visible="false"/>
+
+                        <Label fx:id="lblRezistenta" text="Rezistenta:" GridPane.rowIndex="9" GridPane.columnIndex="0" visible="false"/>
+                        <TextField fx:id="rezistentaField" GridPane.rowIndex="9" GridPane.columnIndex="1" visible="false"/>
+                    </GridPane>
+
+                    <HBox spacing="10">
+                        <Button text="Adauga" onAction="#addUser"/>
+                        <Button text="Curata Formular" onAction="#clearForm"/>
+                    </HBox>
+                </VBox>
+
+                <VBox spacing="10">
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Toti Utilizatorii" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                        <Button fx:id="prevButton" text="◀" onAction="#previousPage"/>
+                        <Label fx:id="pageLabel" text="Pagina 1/1" style="-fx-font-weight: bold"/>
+                        <Button fx:id="nextButton" text="▶" onAction="#nextPage"/>
+                        <Button text="Sterge Selectat" onAction="#removeSelectedUser"
+                                style="-fx-background-color: #F44336; -fx-text-fill: white;"/>
+                        <Button text="Reincarca" onAction="#refreshUsers"/>
+                    </HBox>
+
+                    <TableView fx:id="userTable" prefHeight="400">
+                        <columns>
+                            <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
+                            <TableColumn fx:id="colUsername" text="Username" prefWidth="120"/>
+                            <TableColumn fx:id="colEmail" text="Email" prefWidth="180"/>
+                            <TableColumn fx:id="colType" text="Tip" prefWidth="100"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </HBox>
+        </VBox>
+
+    </HBox>
+</VBox>
+
+

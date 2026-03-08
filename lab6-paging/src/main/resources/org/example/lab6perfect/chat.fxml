@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.lab6perfect.controller.ChatController"
+      spacing="15">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Chat" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="chatUserLabel" text="Nu ești autentificat"
+                   style="-fx-text-fill: #666; -fx-font-style: italic;"/>
+            <Button fx:id="chatLoginButton" text="Login Chat" onAction="#handleChatLogin"/>
+            <Button fx:id="chatLogoutButton" text="Logout Chat" onAction="#handleChatLogout" visible="false"/>
+        </HBox>
+
+        <Separator/>
+
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label fx:id="replyToLabel" text="" style="-fx-font-style: italic; -fx-text-fill: #2a4238;" visible="false"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="replyButton" text="Răspunde" onAction="#handleReply" visible="false"/>
+            <Button text="Anulează reply" onAction="#handleClearReply" visible="false"/>
+        </HBox>
+
+        <HBox spacing="5" alignment="CENTER_LEFT" style="-fx-padding: 0 0 5 0;">
+            <Label fx:id="typingIndicator" text=""
+                   style="-fx-text-fill: #2a4238; -fx-font-style: italic; -fx-font-size: 12px;"
+                   visible="false"/>
+            <ProgressIndicator fx:id="typingProgress" prefWidth="16" prefHeight="16" visible="false"/>
+        </HBox>
+
+        <HBox spacing="20" VBox.vgrow="ALWAYS">
+            <VBox spacing="10" prefWidth="200">
+                <Label text="Prieteni" style="-fx-font-weight: bold;"/>
+                <ListView fx:id="chatFriendsList" VBox.vgrow="ALWAYS"/>
+            </VBox>
+
+            <VBox spacing="10" VBox.vgrow="ALWAYS">
+                <Label text="Conversație" style="-fx-font-weight: bold;"/>
+                <TextArea fx:id="chatArea" VBox.vgrow="ALWAYS"
+                          editable="false" wrapText="true"
+                          style="-fx-font-family: 'Monospaced'; -fx-font-size: 12px;"
+                          onMouseClicked="#handleMessageClick"/>
+
+                <HBox spacing="10">
+                    <TextField fx:id="chatMessageField" HBox.hgrow="ALWAYS"
+                               promptText="Scrie mesajul aici..."
+                               onKeyPressed="#handleTyping"/>
+                    <Button fx:id="chatSendButton" text="Trimite"
+                            onAction="#handleSendChatMessage"/>
+                </HBox>
+            </VBox>
+
+
+        </HBox>
+
+</VBox>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.lab6perfect.controller.FriendRequestController"
+      spacing="15">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label fx:id="statusLabel"
+           text=""
+           style="-fx-text-fill: #666;"/>
+
+    <VBox spacing="15">
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
+
+        <Label text="Gestionare Cereri de Prietenie" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+        <!-- Trimite cerere nouă -->
+        <VBox spacing="10" style="-fx-background-color: #f5f5f5; -fx-padding: 15; -fx-border-radius: 5; -fx-border-color: #ddd;">
+            <Label text="Trimite cerere de prietenie" style="-fx-font-weight: bold;"/>
+
+            <HBox spacing="10">
+                <TextField fx:id="friendRequestField" promptText="Username prieten" HBox.hgrow="ALWAYS"/>
+                <Button fx:id="sendFriendRequestButton" text="Trimite cerere"
+                        onAction="#handleSendFriendRequest"
+                        style="-fx-background-color: #2196F3; -fx-text-fill: white;"/>
+            </HBox>
+
+            <Label text="Introdu username-ul prietenului căruia vrei să-i trimiți o cerere de prietenie"
+                   style="-fx-font-size: 12px; -fx-text-fill: #666;"/>
+        </VBox>
+
+        <!-- Cereri primite în așteptare -->
+        <VBox spacing="10" style="-fx-background-color: #fff8e1; -fx-padding: 15; -fx-border-radius: 5; -fx-border-color: #ffd54f;">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Cereri primite în așteptare" style="-fx-font-weight: bold;"/>
+                <Label fx:id="pendingRequestsLabel" text="(0 cereri)"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="Refresh" onAction="#handleRefreshFriendRequests"/>
+            </HBox>
+
+            <ListView fx:id="pendingRequestsList" prefHeight="150">
+                <placeholder>
+                    <Label text="Nu ai nicio cerere de prietenie în așteptare"
+                           style="-fx-text-fill: #666; -fx-font-style: italic;"/>
+                </placeholder>
+            </ListView>
+
+            <HBox spacing="10">
+                <Button fx:id="acceptRequestButton" text="Acceptă cerere"
+                        onAction="#handleAcceptRequest"
+                        style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+                <Button fx:id="rejectRequestButton" text="Respinge cerere"
+                        onAction="#handleRejectRequest"
+                        style="-fx-background-color: #F44336; -fx-text-fill: white;"/>
+            </HBox>
+        </VBox>
+
+        <!-- Istoric cereri -->
+        <VBox spacing="10" style="-fx-background-color: #f9f9f9; -fx-padding: 15; -fx-border-radius: 5; -fx-border-color: #ddd;">
+            <Label text="Istoric cereri" style="-fx-font-weight: bold;"/>
+
+            <TabPane prefHeight="200">
+                <Tab text="Cereri trimise">
+                    <VBox>
+                        <ListView fx:id="sentRequestsList" VBox.vgrow="ALWAYS">
+                            <placeholder>
+                                <Label text="Nu ai trimis nicio cerere de prietenie"
+                                       style="-fx-text-fill: #666; -fx-font-style: italic;"/>
+                            </placeholder>
+                        </ListView>
+                    </VBox>
+                </Tab>
+
+                <Tab text="Toate cererile">
+                    <VBox>
+                        <ListView fx:id="allRequestsList" VBox.vgrow="ALWAYS">
+                            <placeholder>
+                                <Label text="Nu există cereri de prietenie"
+                                       style="-fx-text-fill: #666; -fx-font-style: italic;"/>
+                            </placeholder>
+                        </ListView>
+                    </VBox>
+                </Tab>
+            </TabPane>
+        </VBox>
+    </VBox>
+
+
+</VBox>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.image.ImageView?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.lab6perfect.controller.ProfileController"
+      spacing="20"
+      style="-fx-background-color: #f0f0f0;">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <HBox spacing="20" alignment="TOP_LEFT">
+        <VBox spacing="10">
+            <ImageView fx:id="profileImageView"
+                       fitWidth="220"
+                       fitHeight="220"
+                       preserveRatio="true"
+                       style="-fx-border-radius: 60; -fx-border-color: #666; -fx-border-width: 50;"/>
+
+            <Label text="Change avatar:" style="-fx-font-weight: bold;"/>
+            <ComboBox fx:id="avatarCombo"
+                      promptText="Select image"
+                      onAction="#handleAvatarSelected"
+                      prefWidth="150"/>
+        </VBox>
+
+
+        <VBox spacing="10">
+            <Label text="Username:" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            <Label fx:id="usernameLabel" text=""
+                   style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+            <Separator prefWidth="300"/>
+
+             <VBox spacing="8">
+                <HBox spacing="10">
+                    <Label text="Email:" style="-fx-font-weight: bold; -fx-min-width: 80;"/>
+                    <Label fx:id="emailLabel" text=""/>
+                </HBox>
+
+                <HBox spacing="10">
+                    <Label text="User Type:" style="-fx-font-weight: bold; -fx-min-width: 80;"/>
+                    <Label fx:id="userTypeLabel" text=""/>
+                </HBox>
+
+                <HBox spacing="10">
+                    <Label text="Status:" style="-fx-font-weight: bold; -fx-min-width: 80;"/>
+                    <Label fx:id="userStatusLabel" text="" style="-fx-text-fill: green;"/>
+                </HBox>
+            </VBox>
+        </VBox>
+    </HBox>
+
+
+    <VBox spacing="15">
+        <Label text="Statistics" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+        <HBox spacing="30" alignment="CENTER_LEFT">
+            <VBox spacing="5" alignment="CENTER">
+                <Label text="Friends" style="-fx-font-weight: bold;"/>
+                <Label fx:id="friendsCountLabel" text="" style="-fx-font-size: 28px;"/>
+            </VBox>
+
+            <VBox spacing="5" alignment="CENTER">
+                <Label text="Events" style="-fx-font-weight: bold;"/>
+                <Label fx:id="eventsCountLabel" text="" style="-fx-font-size: 28px;"/>
+            </VBox>
+
+        </HBox>
+    </VBox>
+
+    <VBox spacing="15">
+        <Label text="Friends and Events" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+        <HBox spacing="20">
+            <VBox spacing="5">
+                <Label text="Friends:" style="-fx-font-weight: bold;"/>
+                <ListView fx:id="friendsList" prefWidth="200" prefHeight="150">
+                    <placeholder>
+                        <Label text="No friends yet"/>
+                    </placeholder>
+                </ListView>
+            </VBox>
+
+
+            <VBox spacing="5">
+                <Label text="Events:" style="-fx-font-weight: bold;"/>
+                <ListView fx:id="eventsList" prefWidth="200" prefHeight="150">
+                    <placeholder>
+                        <Label text="No events yet"/>
+                    </placeholder>
+                </ListView>
+            </VBox>
+
+            <VBox spacing="5">
+                <Label text="Recent Activity:" style="-fx-font-weight: bold;"/>
+                <ListView fx:id="activityList" prefWidth="200" prefHeight="150">
+                    <placeholder>
+                        <Label text="No activity yet"/>
+                    </placeholder>
+                </ListView>
+            </VBox>
+        </HBox>
+    </VBox>
+
+
+    <HBox spacing="15">
+        <Button text="Refresh Profile" onAction="#refreshProfile"
+                style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+    </HBox>
+
+</VBox>

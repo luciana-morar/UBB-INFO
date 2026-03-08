@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TabPane xmlns="http://javafx.com/javafx"
+         xmlns:fx="http://javafx.com/fxml"
+         fx:controller="org.example.lab6perfect.controller.UserManagementController"
+         fx:id="tabPane"
+         prefWidth="1100" prefHeight="750">
+
+    <Tab text="Utilizatori">
+        <fx:include source="users.fxml" fx:id="usersView"/>
+    </Tab>
+
+    <Tab text="Prietenii">
+        <fx:include source="friendship.fxml" fx:id="friendshipsView"/>
+    </Tab>
+
+    <Tab text="Comunitati">
+        <fx:include source="communities.fxml" fx:id="communitiesView"/>
+    </Tab>
+
+
+    <Tab text="Chat">
+        <fx:include source="chat.fxml" fx:id="chatView"/>
+    </Tab>
+    <Tab text="Cereri de prietenie">
+        <fx:include source="friend-request.fxml" fx:id="friendRequestView"/>
+    </Tab>
+
+    <Tab text="Race Events" fx:id="raceEventsTab">
+        <fx:include source="race-events.fxml" fx:id="raceEventsView"/>
+    </Tab>
+    <Tab text="Profile">
+        <fx:include source="profile.fxml" fx:id="profileView"/>
+    </Tab>
+
+
+
+
+</TabPane>

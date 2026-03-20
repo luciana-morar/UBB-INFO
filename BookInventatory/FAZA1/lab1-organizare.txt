@@ -1,0 +1,37 @@
+Laboratorul 1 
+
+4. BookInventory - Sistem de inventar pentru o mică librărie
+ 
+SQLite/ post-gres
+Aplicatie web de tip client-server
+
+
+- import date 
+- unit tests
+
+functionalitati: 
+	
+	- logare reader
+	- catalog vizualizare carti
+	- cautare 
+	- filtrare
+	- sortare
+	- verificare disponibilitate 
+	- inchiriere carte de catre reader - ce logica? shop cart 
+	- return carte si refacere stoc
+
+	-- rezolvare prin import partea de admin
+
+NICE TO HAVE
+! notificare pentru inchirieri 
+
+	- logare admin 
+	- gestionare stoc - adaugare carti/ actualizare/stergere/vizualizare (CRUD stoc)
+	- gestionare inchirieri - CRUD - lista de carti inchiriate si  lista de readeri
+	
+
+
+
+
+
+

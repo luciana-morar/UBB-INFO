@@ -1,4 +1,4 @@
-﻿# <span style="color:red" Sistem de inventar pentru o mică librărie </span>
+🟢 Sistem de inventar pentru o mică librărie 
 
 
 ## [ Vezi documentul UseCases pentru mai multe informatii ](Usecases_Library.pdf) </p>

@@ -19,14 +19,16 @@ Scopul proiectului este de a facilita organizarea inventarului și de a simplifi
 
 ## Structura proiectului
 Exemplu de organizare a fișierelor:
+```
 project/
 ├── src/
-│ └── main/
-│ ├── java/
-│ └── resources/
-├── src/test/
+│   ├── main/
+│   │   ├── java/
+│   │   └── resources/
+│   └── test/
 ├── pom.xml
 └── README.md
+```
 
 
 ## Tehnologii utilizate

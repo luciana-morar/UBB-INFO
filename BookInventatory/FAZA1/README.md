@@ -18,8 +18,9 @@ Scopul proiectului este de a facilita organizarea inventarului și de a simplifi
 - Gestionarea stocului (cantitate disponibilă)
 
 ## Structura proiectului
-<h2 style="color:orange;">Structura proiectului</h2>
+
 Exemplu de organizare a fișierelor:
+
 ```
 project/
 ├── src/

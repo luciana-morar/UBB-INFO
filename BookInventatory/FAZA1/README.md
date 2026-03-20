@@ -1,7 +1,7 @@
-🟢 Sistem de inventar pentru o mică librărie 
+# Sistem de inventar pentru o mică librărie 
 
 
-## [ Vezi documentul UseCases pentru mai multe informatii ](Usecases_Library.pdf) </p>
+### [ Vezi documentul UseCases pentru mai multe informatii ](Usecases_Library.pdf) </p>
 
 ## Descriere
 Acest proiect reprezintă un sistem simplu de gestionare a inventarului pentru o mică librărie. 

@@ -28,7 +28,6 @@ project/
 │   │   ├── java/
 │   │   └── resources/
 │   └── test/
-├── pom.xml
 └── README.md
 ```
 

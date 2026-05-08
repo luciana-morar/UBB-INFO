@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Books - Librarian</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Manage Books - Librarian Dashboard</h1>
+        <div>
+            <span>Welcome, <span th:text="${#authentication.name}">User</span>!</span>
+            <a th:href="@{/logout}" class="logout-btn">Logout</a>
+        </div>
+    </div>
+
+    <div class="add-button">
+        <a th:href="@{/admin/books/add}" class="btn-add">+ Add New Book</a>
+    </div>
+
+    <table>
+        <thead>
+        <tr><th>ID</th><th>Title</th><th>Author</th><th>Category</th><th>Year</th><th>Available/Total</th></tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.id}"/>
+            <td th:text="${book.title}"/>
+            <td th:text="${book.author}"/>
+            <td th:text="${book.category}"/>
+            <td th:text="${book.year}"/>
+            <td th:text="${book.availabilityDisplay}"/>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,231 @@
+:root {
+    --blue: #3b82f6;
+    --blue-light: #60a5fa;
+    --bg: #f0f9ff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--bg);
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header, footer {
+    background: var(--blue);
+    color: white;
+    text-align: center;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+/* MENIU VERTICAL */
+nav {
+    background: var(--blue);
+    border-radius: 8px;
+    width: 220px;
+    float: left;
+    margin-right: 20px;
+}
+
+nav ul {
+    list-style: none;
+}
+
+nav ul li a {
+    display: block;
+    padding: 12px 20px;
+    color: white;
+    text-decoration: none;
+    border-bottom: 1px solid var(--blue-light);
+}
+
+nav ul li a:hover {
+    background: var(--blue-light);
+    padding-left: 28px;
+}
+
+.main-content {
+    margin-left: 240px;
+}
+
+
+.about {
+    display: flex;
+    gap: 30px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.about-text, .about-image {
+    flex: 1;
+}
+
+.about-image img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.btn {
+    display: inline-block;
+    background: var(--blue);
+    color: white;
+    padding: 8px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+/* Tabele */
+.table-responsive {
+    overflow-x: auto;
+    margin: 15px 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+th {
+    background: var(--blue-light);
+}
+
+/* Formulare */
+form {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+fieldset {
+    border: 1px solid #ddd;
+    padding: 15px;
+}
+
+legend {
+    color: var(--blue);
+    font-weight: bold;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.form-group {
+    flex: 1;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.form-buttons {
+    margin-top: 15px;
+}
+
+input[type="submit"], input[type="reset"] {
+    background: var(--blue);
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* Carduri */
+.menu-grid, .widgets {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 20px 0;
+}
+
+.menu-card, .widget {
+    flex: 1;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.widget-header {
+    background: var(--blue);
+    color: white;
+    padding: 10px;
+    margin: -15px -15px 15px -15px;
+    border-radius: 8px 8px 0 0;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.stat-card {
+    background: var(--blue);
+    color: white;
+    padding: 15px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.stat-card h3 {
+    font-size: 1.8rem;
+}
+
+.contact-card, .policies {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+.interior-img {
+    width: 100%;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+footer {
+    margin-top: 30px;
+}
+
+/* Responsive meniu vertical */
+@media (max-width: 768px) {
+    nav {
+        width: 100%;
+        float: none;
+        margin-bottom: 20px;
+    }
+    .main-content {
+        margin-left: 0;
+    }
+}
+

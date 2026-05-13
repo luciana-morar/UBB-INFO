@@ -1,0 +1,490 @@
+:root {
+    --blue: #3b82f6;
+    --blue-light: #60a5fa;
+    --bg: #f0f9ff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--bg);
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header, footer {
+    background: var(--blue);
+    color: white;
+    text-align: center;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+nav {
+    background: var(--blue);
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+nav ul li a {
+    display: block;
+    padding: 12px 24px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    background: var(--blue-light);
+    border-radius: 8px;
+}
+
+/* ANIMATII */
+/* @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes fade {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+} */
+
+ button:hover, input[type="submit"]:hover, .btn:hover {
+    background: #2564eb99;  /* o nuanță mai închisă de albastru */
+    transition: 0.2s;
+}
+button:hover, input[type="submit"]:hover, .btn:hover {
+    transform: scale(1.02);
+    transition: transform 0.2s;
+}
+
+button:hover, input[type="submit"]:hover, .btn:hover {
+    animation: pulse 0.3s ease;
+}
+
+.card, .widget, .menu-card {
+    animation: fade 0.5s ease-out;
+}
+
+.about {
+    display: flex;
+    gap: 30px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.about-text, .about-image {
+    flex: 1;
+}
+
+.about-image img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.btn {
+    display: inline-block;
+    background: var(--blue);
+    color: white;
+    padding: 8px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    margin: 15px 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background: var(--blue-light);
+}
+
+/* formulare */
+form {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+fieldset {
+    border: 1px solid #ddd;
+    padding: 15px;
+}
+
+legend {
+    color: var(--blue);
+    font-weight: bold;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.form-group {
+    flex: 1;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--blue);
+}
+
+.form-buttons {
+    margin-top: 15px;
+}
+
+input[type="submit"], input[type="reset"] {
+    background: var(--blue);
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+input[type="reset"] {
+    background: #94a3b8;
+}
+
+.menu-grid, .widgets {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 20px 0;
+}
+
+.menu-card, .widget {
+    flex: 1;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.widget-header {
+    background: var(--blue);
+    color: white;
+    padding: 10px;
+    margin: -15px -15px 15px -15px;
+    border-radius: 8px 8px 0 0;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.stat-card {
+    background: var(--blue);
+    color: white;
+    padding: 15px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.stat-card h3 {
+    font-size: 1.8rem;
+}
+
+.contact-card, .policies {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+.interior-img {
+    width: 100%;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+footer {
+    margin-top: 30px;
+}
+
+
+/* MEDIA QUERIES - RESPONSIVE */
+@media (max-width: 768px) {
+    .container { padding: 10px; }
+    header h1 { font-size: 1.8rem; }
+    
+    nav ul { flex-direction: column; }
+    nav ul li a { text-align: center; padding: 12px; }
+    
+    table { min-width: auto; }
+    th, td { padding: 8px; font-size: 12px; }
+    
+    .card-container { flex-direction: column; }
+    .card { width: 100%; }
+    
+    input, select, textarea { width: 100%; }
+    button, input[type="submit"], input[type="reset"] { width: 100%; margin-bottom: 10px; }
+    
+    .about { flex-direction: column; }
+    .menu-grid { flex-direction: column; }
+    .widgets { flex-direction: column; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+    th, td {
+        display: block;
+        width: 100%;
+    }
+    th { background-color: var(--blue); color: white; }
+    tr {
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+    }
+    td { border-bottom: 1px solid #eee; }
+   
+    .stats-grid { grid-template-columns: 1fr; }
+}
+
+
+
+
+
+/* carusel  */
+
+.carousel-container {
+    position: relative;
+    width: 100%;
+    height: 50vh;  
+    min-height: 250px;  
+    max-height: 500px;  
+    margin: 20px 0;
+    border-radius: 12px;
+    background: #333;
+}
+
+.carousel-slide {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slide-content {
+    background: rgba(0, 0, 0, 0.65);
+    color: white;
+    padding: 5% 8%; 
+    border-radius: 16px;
+    text-align: center;
+    width: 80%;
+    max-width: 600px; 
+}
+
+.slide-content h3 {
+    font-size: clamp(18px, 5vw, 32px);  
+    margin-bottom: 10px;
+    color: #358ee6;
+}
+
+.slide-content p {
+    font-size: clamp(12px, 3vw, 18px);  
+    margin-bottom: 15px;
+}
+
+.slide-content .btn {
+    background: #46698c;
+    color: #2f3745;
+    font-weight: bold;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+
+}
+
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    width: clamp(30px, 8vw, 50px);
+    height: clamp(30px, 8vw, 50px);
+    border-radius: 50%;
+}
+
+.prev {
+    left: 2%;
+}
+
+.next {
+    right: 2%;
+}
+
+
+/* TABEL SORTARE */
+.sortable {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+
+.sortable:hover {
+    background-color: #3b82f6;
+    color: white;
+}
+
+
+th.sort-asc::after {
+    content: " ▲";
+    font-size: 12px;
+}
+
+th.sort-desc::after {
+    content: " ▼";
+    font-size: 12px;
+}
+
+
+/* liste colapsibile */
+
+.nested-list {
+    list-style: none;
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.nested-item {
+    margin: 10px 0;
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+
+.nested-item:hover {
+    background-color: #f5f5f5;
+    border-radius: 8px;
+}
+
+.nested-toggle {
+    
+    width: 24px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #3b82f6;
+    cursor: pointer;
+    user-select: none;
+}
+
+.nested-sublist {
+    list-style: none;
+    margin-left: 35px;
+    margin-top: 10px;
+    padding-left: 10px;
+    border-left: 2px solid #3b82f6;
+    display: none; 
+}
+
+.nested-sublist.show {
+    display: block;
+}
+
+
+
+/*cerinta 6 - calculator bacșiș*/
+.calculator-bacsis {
+    background: #f8f9fa;
+    border: 2px solid #3b82f6;
+    border-radius: 12px;
+    padding: 15px;
+    margin: 20px 0;
+}
+
+.calculator-bacsis h4 {
+    color: #3b82f6;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.bacsis-mesaj {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 10px;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.bacsis-mesaj.succes {
+    background: #d4edda;
+    color: #155724;
+}
+
+.bacsis-mesaj.alert {
+    background: #fff3cd;
+    color: #856404;
+}
+
+
+/* cerinta suplimentara- detalii event*/
+
+.eveniment-message {
+    background-color: #e3f2fd;
+    padding: 12px 15px;
+    margin: 15px 0;
+    border-radius: 8px;
+    font-size: 14px;
+    
+}
+
+
+
+

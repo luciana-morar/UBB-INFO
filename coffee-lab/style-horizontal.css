@@ -1,0 +1,313 @@
+:root {
+    --blue: #3b82f6;
+    --blue-light: #60a5fa;
+    --bg: #f0f9ff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--bg);
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header, footer {
+    background: var(--blue);
+    color: white;
+    text-align: center;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+/* MENIU ORIZONTAL CU SUBMENIU */
+nav {
+    background: var(--blue);
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+nav ul li {
+    position: relative;
+}
+
+nav ul li a {
+    display: block;
+    padding: 12px 24px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    background: var(--blue-light);
+    border-radius: 8px;
+}
+
+/* SUBMENIU */
+.submenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: var(--blue);
+    min-width: 180px;
+    border-radius: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 100;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* SUBMENIU APARE LA HOVER */
+nav ul li:hover .submenu {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* STIL PENTRU LINK-URILE DIN SUBMENIU */
+.submenu li a {
+    display: block;
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
+    border-bottom: 1px solid var(--blue-light);
+}
+
+.submenu li a:hover {
+    background: var(--blue-light);
+    padding-left: 20px;
+    border-radius: 0;
+}
+
+/* ULTIMUL ELEMENT FARA BORDER */
+.submenu li:last-child a {
+    border-bottom: none;
+}
+
+/* RESTUL STILURILOR */
+.about {
+    display: flex;
+    gap: 30px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.about-text, .about-image {
+    flex: 1;
+}
+
+.about-image img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.btn {
+    display: inline-block;
+    background: var(--blue);
+    color: white;
+    padding: 8px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.btn:hover {
+    background: var(--blue-light);
+}
+
+.table-responsive {
+    overflow-x: auto;
+    margin: 15px 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background: var(--blue-light);
+}
+
+form {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+fieldset {
+    border: 1px solid #ddd;
+    padding: 15px;
+}
+
+legend {
+    color: var(--blue);
+    font-weight: bold;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.form-group {
+    flex: 1;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--blue);
+}
+
+.form-buttons {
+    margin-top: 15px;
+}
+
+input[type="submit"], input[type="reset"] {
+    background: var(--blue);
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+input[type="reset"] {
+    background: #94a3b8;
+}
+
+.menu-grid, .widgets {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 20px 0;
+}
+
+.menu-card, .widget {
+    flex: 1;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.widget-header {
+    background: var(--blue);
+    color: white;
+    padding: 10px;
+    margin: -15px -15px 15px -15px;
+    border-radius: 8px 8px 0 0;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.stat-card {
+    background: var(--blue);
+    color: white;
+    padding: 15px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.stat-card h3 {
+    font-size: 1.8rem;
+}
+
+.contact-card, .policies {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+.interior-img {
+    width: 100%;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+footer {
+    margin-top: 30px;
+}
+.interior-img {
+    width: 300px;       /* lățime fixă */
+    height: 400px;      /* înălțime fixă */
+    object-fit: cover;  /* cum se încadrează imaginea în spațiu */
+    border-radius: 8px; /* opțional: colțuri rotunjite */
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+    }
+    
+    .submenu {
+        position: static;
+        opacity: 1;
+        visibility: visible;
+        background: var(--blue-light);
+        margin-left: 20px;
+        box-shadow: none;
+    }
+    
+    .submenu li a {
+        padding-left: 40px;
+    }
+    
+    .about {
+        flex-direction: column;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}

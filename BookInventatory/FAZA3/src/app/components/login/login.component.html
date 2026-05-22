@@ -1,0 +1,64 @@
+<div class="login-shell">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="logo-icon">
+        <svg width="48" height="48" viewBox="0 0 32 32" fill="none">
+          <rect width="32" height="32" rx="8" fill="#4F46E5"/>
+          <path d="M8 10h6v12H8V10zm10 0h6v12h-6V10z" fill="white" opacity="0.9"/>
+          <path d="M13 10h6v12h-6V10z" fill="white"/>
+        </svg>
+      </div>
+      <h1>Library Management System</h1>
+      <p>Welcome back! Please login to your account</p>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="8" x2="12" y2="12"/>
+        <line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      {{ errorMessage }}
+    </div>
+
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>Username</label>
+        <div class="input-wrapper">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          <input type="text" [(ngModel)]="credentials.username" name="username" placeholder="Enter your username" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <div class="input-wrapper">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+          <input type="password" [(ngModel)]="credentials.password" name="password" placeholder="Enter your password" required>
+        </div>
+      </div>
+
+      <button type="submit" [disabled]="isLoading">
+        {{ isLoading ? 'Logging in...' : 'Login' }}
+      </button>
+    </form>
+
+    <div class="demo-info">
+      <p><strong>Demo Credentials:</strong></p>
+      <div class="demo-row">
+        <span class="demo-badge reader"> Reader</span>
+        <span>reader1 / password</span>
+      </div>
+      <div class="demo-row">
+        <span class="demo-badge librarian"> Librarian</span>
+        <span>admin / admin</span>
+      </div>
+    </div>
+  </div>
+</div>

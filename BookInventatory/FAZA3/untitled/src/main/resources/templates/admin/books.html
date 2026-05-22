@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Books - Librarian</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Manage Books - Librarian Dashboard</h1>
+        <div>
+            <span>Welcome, <span th:text="${#authentication.name}">User</span>!</span>
+            <a th:href="@{/logout}" class="logout-btn">Logout</a>
+        </div>
+    </div>
+
+    <div th:if="${param.success}" class="success-message" th:text="${param.success}"></div>
+    <div th:if="${param.error}" class="error-message" th:text="${param.error}"></div>
+
+    <div class="add-button">
+        <a th:href="@{/admin/books/add}" class="btn-add">+ Add New Book</a>
+        <a th:href="@{/admin/readers}" class="btn-secondary">Manage Readers →</a>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Category</th>
+            <th>Year</th>
+            <th>Available/Total</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.id}"/>
+            <td th:text="${book.title}"/>
+            <td th:text="${book.author}"/>
+            <td th:text="${book.category}"/>
+            <td th:text="${book.year}"/>
+            <td th:text="${book.availabilityDisplay}"/>
+            <td>
+                <form th:action="@{/admin/books/delete/{id}(id=${book.id})}" method="post"
+                      onsubmit="return confirm('Delete this book?')">
+                    <button type="submit" class="btn-delete">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

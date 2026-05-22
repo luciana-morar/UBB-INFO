@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Readers - Librarian</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Manage Readers</h1>
+        <div>
+            <span>Welcome, <span th:text="${#authentication.name}">User</span>!</span>
+            <a th:href="@{/logout}" class="logout-btn">Logout</a>
+        </div>
+    </div>
+
+    <!-- Mesaje de succes/eroare -->
+    <div th:if="${param.success}" class="success-message" th:text="${param.success}"></div>
+    <div th:if="${param.error}" class="error-message" th:text="${param.error}"></div>
+
+    <div class="add-button">
+        <a th:href="@{/admin/readers/add}" class="btn-add">+ Add New Reader</a>
+    </div>
+    <div class="nav-links">
+        <a th:href="@{/admin/books}" class="btn-secondary">← Back to Books</a>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="reader : ${readers}">
+            <td th:text="${reader.id}"/>
+            <td th:text="${reader.username}"/>
+            <td th:text="${reader.firstName}"/>
+            <td th:text="${reader.lastName}"/>
+            <td th:text="${reader.email}"/>
+            <td>
+                <a th:href="@{/admin/readers/edit/{id}(id=${reader.id})}" class="btn-edit">Edit</a>
+                <form th:action="@{/admin/readers/delete/{id}(id=${reader.id})}" method="post" style="display:inline;">
+                    <button type="submit" class="btn-delete" onclick="return confirm('Are you sure?')">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Catalog</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Book Catalog</h1>
+        <div>
+            <span>Welcome, <span th:text="${#authentication.name}">User</span>!</span>
+            <a th:href="@{/logout}" class="logout-btn">Logout</a>
+        </div>
+    </div>
+
+    <div class="search-section">
+        <form th:action="@{/books}" method="get">
+            <input type="text" name="search" placeholder="Search by title, author, or category..."
+                   th:value="${searchKeyword}">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <table>
+        <thead>
+        <tr><th>Title</th><th>Author</th><th>Category</th><th>Year</th><th>Availability</th></tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.title}"/>
+            <td th:text="${book.author}"/>
+            <td th:text="${book.category}"/>
+            <td th:text="${book.year}"/>
+            <td th:text="${book.availabilityDisplay}"/>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

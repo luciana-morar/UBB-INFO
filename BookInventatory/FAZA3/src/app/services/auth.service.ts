@@ -54,10 +54,15 @@ export class AuthService {
   isLibrarian(): boolean {
     return this.getUserRole() === 'LIBRARIAN';
   }
-
   isReader(): boolean {
     return this.getUserRole() === 'READER';
   }
+  getUserId(): number | null {
+    const id = localStorage.getItem('userId');
+    return id ? parseInt(id, 10) : null;
+  }
+
+
 
   private hasToken(): boolean {
     return !!this.getToken();

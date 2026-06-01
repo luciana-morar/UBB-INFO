@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User, ReaderRequest } from '../models/user.model';
+import { Rental, RentalRequest } from '../models/rental.model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +26,10 @@ export class ReaderService {
 
   deleteReader(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`, { withCredentials: true });
+  }
+  rentBooks(userId: number, request: RentalRequest): Observable<Rental[]> {
+    return this.http.post<Rental[]>(`${this.apiUrl}/rent?userId=${userId}`, request, {
+      withCredentials: true
+    });
   }
 }

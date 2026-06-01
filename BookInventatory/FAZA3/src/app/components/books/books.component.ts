@@ -1,12 +1,15 @@
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BookService } from '../../services/book.service';
 import { ReaderService } from '../../services/reader.service';
 import { AuthService } from '../../services/auth.service';
+import { RentalService } from '../../services/rental.service';
+import { WebSocketService } from '../../services/websocket.service';
 import { Book } from '../../models/book.model';
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-
+import { Rental } from '../../models/rental.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-books',
@@ -15,7 +18,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
   templateUrl: './books.component.html',
   styleUrls: ['./books.component.css']
 })
-export class BooksComponent implements OnInit {
+export class BooksComponent implements OnInit, OnDestroy {
   books: Book[] = [];
   isLoading = true;
   isLibrarian = false;
@@ -25,6 +28,13 @@ export class BooksComponent implements OnInit {
   searchKeyword = '';
   showAddBook = false;
 
+  // === Proprietăți pentru Approve Returns ===
+  activeTab: 'books' | 'approve' = 'books';
+  pendingReturns: Rental[] = [];
+  allRentals: Rental[] = [];
+  isLoadingRentals = false;
+  isApprovingId: number | null = null;
+
   newBook: Partial<Book> = {
     title: '',
     author: '',
@@ -32,20 +42,24 @@ export class BooksComponent implements OnInit {
     publisher: '',
     year: new Date().getFullYear(),
     totalCopies: 1,
-    availableCopies: 1
+    availableCopies: 1,
   };
 
+  // WebSocket
+  private wsSubscriptions: Subscription = new Subscription();
 
-constructor(
-  private bookService: BookService,
-  private readerService: ReaderService,
-  private authService: AuthService,
-  private router: Router,
-  private cdr: ChangeDetectorRef
-) {
-  this.isLibrarian = this.authService.isLibrarian();
-  this.username = this.authService.getUsername() || 'User';
-}
+  constructor(
+    private bookService: BookService,
+    private readerService: ReaderService,
+    private authService: AuthService,
+    private rentalService: RentalService,
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+    private webSocketService: WebSocketService
+  ) {
+    this.isLibrarian = this.authService.isLibrarian();
+    this.username = this.authService.getUsername() || 'User';
+  }
 
   ngOnInit() {
     console.log('ngOnInit - loading books');
@@ -53,13 +67,43 @@ constructor(
     if (this.isLibrarian) {
       this.loadReadersCount();
     }
+    this.initWebSocket();
   }
+
+  ngOnDestroy() {
+    this.wsSubscriptions.unsubscribe();
+    this.webSocketService.disconnect();
+  }
+
+  initWebSocket() {
+    this.webSocketService.connect();
+
+    this.wsSubscriptions.add(
+      this.webSocketService.bookUpdates$.subscribe((updatedBook) => {
+        const index = this.books.findIndex(b => b.id === updatedBook.id);
+        if (index !== -1) {
+          this.books[index] = updatedBook;
+        }
+        this.cdr.detectChanges();
+      })
+    );
+
+    this.wsSubscriptions.add(
+      this.webSocketService.rentalUpdates$.subscribe(() => {
+        if (this.activeTab === 'approve') {
+          this.loadPendingReturns();
+        }
+        this.cdr.detectChanges();
+      })
+    );
+  }
+
   getCategoryClass(category: string): string {
     const map: { [key: string]: string } = {
-      'Fiction': 'badge badge-fiction',
-      'Technology': 'badge badge-technology',
-      'History': 'badge badge-history',
-      'Biography': 'badge badge-biography',
+      Fiction: 'badge badge-fiction',
+      Technology: 'badge badge-technology',
+      History: 'badge badge-history',
+      Biography: 'badge badge-biography',
       'Self Help': 'badge badge-self-help',
     };
     return map[category] || 'badge badge-default';
@@ -70,15 +114,15 @@ constructor(
     this.bookService.getAllBooks().subscribe({
       next: (data) => {
         this.books = data;
-        this.availableBooksCount = data.filter(b => b.availableCopies > 0).length;
+        this.availableBooksCount = data.filter((b) => b.availableCopies > 0).length;
         this.isLoading = false;
-        this.cdr.detectChanges(); // forțează update-ul view-ului
+        this.cdr.detectChanges();
       },
       error: (error) => {
         console.error('Error:', error);
         this.isLoading = false;
         this.cdr.detectChanges();
-      }
+      },
     });
   }
 
@@ -89,7 +133,7 @@ constructor(
       },
       error: (error) => {
         console.error('Error loading readers count:', error);
-      }
+      },
     });
   }
 
@@ -107,7 +151,7 @@ constructor(
       error: (error) => {
         console.error('Error searching books:', error);
         this.isLoading = false;
-      }
+      },
     });
   }
 
@@ -120,7 +164,7 @@ constructor(
       publisher: '',
       year: new Date().getFullYear(),
       totalCopies: 1,
-      availableCopies: 1
+      availableCopies: 1,
     };
   }
 
@@ -142,7 +186,7 @@ constructor(
       error: (error) => {
         console.error('Error adding book:', error);
         alert('Error adding book: ' + (error.error?.message || error.message));
-      }
+      },
     });
   }
 
@@ -155,7 +199,7 @@ constructor(
         error: (error) => {
           console.error('Error deleting book:', error);
           alert('Error deleting book: ' + (error.error?.message || error.message));
-        }
+        },
       });
     }
   }
@@ -164,6 +208,69 @@ constructor(
     this.searchKeyword = '';
     this.loadBooks();
   }
+
+  // === Metode pentru Approve Returns ===
+  switchToApprove() {
+    this.activeTab = 'approve';
+    this.loadPendingReturns();
+  }
+
+  loadPendingReturns() {
+    this.isLoadingRentals = true;
+    this.rentalService.getPendingReturns().subscribe({
+      next: (data) => {
+        this.pendingReturns = data;
+        this.isLoadingRentals = false;
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.isLoadingRentals = false;
+      }
+    });
+
+    this.rentalService.getAllRentals().subscribe({
+      next: (data) => {
+        this.allRentals = data;
+        this.cdr.detectChanges();
+      },
+      error: () => {}
+    });
+  }
+
+  approveReturn(rentalId: number) {
+    this.isApprovingId = rentalId;
+    this.rentalService.approveReturn(rentalId).subscribe({
+      next: () => {
+        this.isApprovingId = null;
+        this.loadPendingReturns();
+        this.loadBooks();
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        this.isApprovingId = null;
+        alert('Error: ' + err.message);
+      }
+    });
+  }
+
+  getStatusClass(status: string): string {
+    const map: Record<string, string> = {
+      'ACTIVE': 'rental-badge badge-active',
+      'PENDING_APPROVAL': 'rental-badge badge-pending',
+      'APPROVED': 'rental-badge badge-approved'
+    };
+    return map[status] || 'rental-badge';
+  }
+
+  getStatusLabel(status: string): string {
+    const map: Record<string, string> = {
+      'ACTIVE': 'Active',
+      'PENDING_APPROVAL': 'Pending Approval',
+      'APPROVED': 'Approved'
+    };
+    return map[status] || status;
+  }
+
   logout() {
     this.authService.logout();
     this.router.navigate(['/login']);
@@ -174,6 +281,7 @@ constructor(
   }
 
   goToBooks() {
+    this.activeTab = 'books';
     this.loadBooks();
   }
 }

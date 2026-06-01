@@ -1,0 +1,277 @@
+<div class="app-shell">
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="navbar-brand">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+        <rect width="32" height="32" rx="8" fill="#4F46E5"/>
+        <path d="M8 10h6v12H8V10zm10 0h6v12h-6V10z" fill="white" opacity="0.9"/>
+        <path d="M13 10h6v12h-6V10z" fill="white"/>
+      </svg>
+      <div>
+        <span class="brand-name">Book Inventory</span>
+        <span class="brand-sub">Welcome, {{ username }}!</span>
+      </div>
+    </div>
+
+    <nav class="navbar-nav">
+      <button (click)="activeTab = 'browse'" [class.active]="activeTab === 'browse'" class="nav-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+        </svg>
+        Browse Books
+      </button>
+      <button (click)="activeTab = 'rentals'; loadRentals()" [class.active]="activeTab === 'rentals'" class="nav-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+        My Rentals
+      </button>
+    </nav>
+
+    <!-- Cart button -->
+    <button (click)="openCart()" class="cart-btn" *ngIf="activeTab === 'browse'">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+      </svg>
+      Cart
+      <span *ngIf="cart.length > 0" class="cart-badge">{{ cart.length }}</span>
+    </button>
+
+    <button (click)="logout()" class="logout-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+        <polyline points="16 17 21 12 16 7"/>
+        <line x1="21" y1="12" x2="9" y2="12"/>
+      </svg>
+      Logout
+    </button>
+  </header>
+
+  <main class="page-content">
+
+    <!-- ===== TAB: BROWSE BOOKS ===== -->
+    <div *ngIf="activeTab === 'browse'">
+      <div class="content-card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">Available Books</h2>
+            <p class="card-subtitle">Search and filter books to add to your cart</p>
+          </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters-bar">
+          <div class="search-input-wrap">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input
+              type="text"
+              [(ngModel)]="searchKeyword"
+              (ngModelChange)="filterBooks()"
+              placeholder="Search by title or author..."
+              class="search-input">
+          </div>
+
+          <select [(ngModel)]="selectedCategory" (ngModelChange)="filterBooks()" class="category-select">
+            <option value="">All Categories</option>
+            <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+          </select>
+
+          <button *ngIf="searchKeyword || selectedCategory" (click)="clearFilters()" class="btn btn-ghost btn-sm">
+            Clear
+          </button>
+        </div>
+
+        <!-- Loading -->
+        <div *ngIf="isLoadingBooks" class="loading-state">
+          <div class="spinner"></div>
+          <p>Loading books...</p>
+        </div>
+
+        <!-- Book Cards Grid -->
+        <div *ngIf="!isLoadingBooks" class="books-grid">
+          <div *ngFor="let book of filteredBooks" class="book-card" [class.in-cart]="isInCart(book)">
+            <div class="book-card-body">
+              <div class="book-card-top">
+                <span [ngClass]="getCategoryClass(book.category)">{{ book.category || 'General' }}</span>
+                <span class="avail-badge">{{ book.availableCopies }} / {{ book.totalCopies }}</span>
+              </div>
+              <h3 class="book-title">{{ book.title }}</h3>
+              <p class="book-author">by {{ book.author }}</p>
+              <div class="book-meta">
+                <span *ngIf="book.publisher">{{ book.publisher }}</span>
+                <span *ngIf="book.year">{{ book.year }}</span>
+              </div>
+            </div>
+            <div class="book-card-footer">
+              <button
+                (click)="toggleCart(book)"
+                class="btn-add-cart"
+                [class.in-cart-btn]="isInCart(book)"
+                [disabled]="book.availableCopies === 0 && !isInCart(book)">
+                <svg *ngIf="!isInCart(book)" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+                <svg *ngIf="isInCart(book)" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                {{ isInCart(book) ? 'In Cart' : (book.availableCopies === 0 ? 'Unavailable' : 'Add to Cart') }}
+              </button>
+            </div>
+          </div>
+
+          <div *ngIf="filteredBooks.length === 0" class="empty-grid">
+            No books found
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TAB: MY RENTALS ===== -->
+    <div *ngIf="activeTab === 'rentals'">
+
+      <!-- Current Rentals -->
+      <div class="content-card" style="margin-bottom: 20px;">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">Current Rentals</h2>
+            <p class="card-subtitle">Books you currently have rented</p>
+          </div>
+          <button
+            *ngIf="selectedRentalIds.length > 0"
+            (click)="returnSelected()"
+            [disabled]="isReturning"
+            class="btn btn-dark">
+            {{ isReturning ? 'Returning...' : 'Return Selected Books' }}
+          </button>
+        </div>
+
+        <div *ngIf="isLoadingRentals" class="loading-state">
+          <div class="spinner"></div>
+        </div>
+
+        <div *ngIf="!isLoadingRentals" class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width:40px;"></th>
+                <th>Book Title</th>
+                <th>Start Date</th>
+                <th>Duration</th>
+                <th>Due Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let rental of activeRentals">
+                <td>
+                  <input type="checkbox"
+                    [checked]="isRentalSelected(rental.id)"
+                    (change)="toggleRentalSelection(rental.id)"
+                    class="rental-checkbox">
+                </td>
+                <td class="td-title">{{ rental.bookTitle }}</td>
+                <td class="td-muted">{{ rental.startDate }}</td>
+                <td class="td-muted">{{ rental.durationWeeks }} week(s)</td>
+                <td class="td-muted">{{ rental.dueDate }}</td>
+              </tr>
+              <tr *ngIf="activeRentals.length === 0">
+                <td colspan="5" class="empty-state">No active rentals</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Rental History -->
+      <div class="content-card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">Rental History</h2>
+            <p class="card-subtitle">Your past book rentals</p>
+          </div>
+        </div>
+
+        <div *ngIf="!isLoadingRentals" class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Book Title</th>
+                <th>Start Date</th>
+                <th>Duration</th>
+                <th>Returned</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let rental of rentalHistory">
+                <td class="td-title">{{ rental.bookTitle }}</td>
+                <td class="td-muted">{{ rental.startDate }}</td>
+                <td class="td-muted">{{ rental.durationWeeks }} week(s)</td>
+                <td class="td-muted">{{ rental.returnedDate || '-' }}</td>
+                <td><span [ngClass]="getStatusClass(rental.status)">{{ getStatusLabel(rental.status) }}</span></td>
+              </tr>
+              <tr *ngIf="rentalHistory.length === 0">
+                <td colspan="5" class="empty-state">No rental history</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ===== CART MODAL ===== -->
+  <div *ngIf="showCart" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Your Cart ({{ cart.length }} book{{ cart.length !== 1 ? 's' : '' }})</h3>
+        <button (click)="closeCart()" class="modal-close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="cart-list">
+        <div *ngIf="cart.length === 0" class="empty-state" style="padding: 24px;">
+          Your cart is empty. Browse books and add them!
+        </div>
+        <div *ngFor="let book of cart" class="cart-item">
+          <div>
+            <div class="cart-item-title">{{ book.title }}</div>
+            <div class="cart-item-author">{{ book.author }}</div>
+          </div>
+          <button (click)="removeFromCart(book)" class="btn-icon btn-icon-danger">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="duration-picker">
+        <label>Rental duration (weeks):</label>
+        <div class="duration-controls">
+          <button (click)="durationWeeks = durationWeeks > 1 ? durationWeeks - 1 : 1" class="dur-btn">−</button>
+          <span class="dur-value">{{ durationWeeks }}</span>
+          <button (click)="durationWeeks = durationWeeks < 8 ? durationWeeks + 1 : 8" class="dur-btn">+</button>
+          <span class="dur-label">week{{ durationWeeks !== 1 ? 's' : '' }}</span>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button (click)="closeCart()" class="btn btn-ghost">Continue Browsing</button>
+        <button (click)="finalizeRental()" [disabled]="cart.length === 0 || isRenting" class="btn btn-primary">
+          {{ isRenting ? 'Processing...' : 'Confirm Rental' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
